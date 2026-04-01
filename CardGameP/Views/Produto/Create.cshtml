@@ -1,0 +1,68 @@
+﻿@model CardGameP.Models.Produto
+
+@{
+    ViewBag.Title = "Cadastrar Produto";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 style="color:#D4AF37;">Cadastrar Novo Produto</h1>
+
+        <a href="@Url.Action("AdminIndex", "Produto")" class="btn btn-outline-light">
+            Voltar para a Lista
+        </a>
+    </div>
+
+    <hr style="border-color: #555;" />
+
+    <div class="product-card p-4">
+        @using (Html.BeginForm("Create", "Produto", FormMethod.Post, new { enctype = "multipart/form-data", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Nome do Produto</label>
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control search-input", placeholder = "Ex: Dragão Branco de Olhos Azuis" })
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Preço (R$)</label>
+                    @Html.TextBoxFor(m => m.Preco, new { @class = "form-control search-input", placeholder = "Ex: 129,90" })
+                    @Html.ValidationMessageFor(m => m.Preco, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Jogo</label>
+                    @Html.TextBoxFor(m => m.Jogo, new { @class = "form-control search-input", placeholder = "Ex: Yu-Gi-Oh!" })
+                    @Html.ValidationMessageFor(m => m.Jogo, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Raridade</label>
+                    @Html.TextBoxFor(m => m.Raridade, new { @class = "form-control search-input", placeholder = "Ex: Ultra Rara" })
+                    @Html.ValidationMessageFor(m => m.Raridade, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Estoque</label>
+                    @Html.TextBoxFor(m => m.Estoque, new { @class = "form-control search-input", type = "number", placeholder = "Ex: 10" })
+                    @Html.ValidationMessageFor(m => m.Estoque, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-white">Imagem do Produto</label>
+                    <input type="file" name="fotoUpload" class="form-control search-input" accept=".jpg,.jpeg,.png,.webp" />
+                    <small class="text-muted">Formatos aceitos: JPG, PNG e WebP.</small>
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-gold px-5">
+                    Cadastrar Produto
+                </button>
+            </div>
+        }
+    </div>
+</div>

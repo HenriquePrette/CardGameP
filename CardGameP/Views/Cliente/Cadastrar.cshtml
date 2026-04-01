@@ -1,0 +1,59 @@
+﻿@model CardGameP.Models.Cliente
+
+@{
+    ViewBag.Title = "Criar Conta - Card Game";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+    <div style="width: 100%; max-width: 500px;">
+
+        <div class="product-card p-4">
+
+            <div class="text-center mb-4">
+                <h2 style="color:#D4AF37;">Criar Conta</h2>
+                <p class="text-white-50">Cadastre-se para realizar compras em nossa loja</p>
+            </div>
+
+            @using (Html.BeginForm("Cadastrar", "Cliente", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger small mb-3" })
+
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">Nome Completo</label>
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control search-input", placeholder = "Ex: João Silva", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">E-mail</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control search-input", type = "email", placeholder = "seuemail@exemplo.com", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">Telefone / WhatsApp</label>
+                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control search-input", placeholder = "Ex: (11) 99999-9999" })
+                    @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">Senha</label>
+                    @Html.PasswordFor(m => m.Senha, new { @class = "form-control search-input", placeholder = "Mínimo 6 caracteres", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger small" })
+                </div>
+
+                <button type="submit" class="btn btn-gold w-100 mt-3">
+                    Cadastrar
+                </button>
+
+                <div class="text-center mt-3">
+                    <a href="@Url.Action("Login", "Cliente")" class="text-white-50 small">Já possui uma conta? Entre aqui.</a>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

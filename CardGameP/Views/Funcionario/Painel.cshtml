@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Painel de Controle";
+}
+
+<div class="container mt-4">
+    <div class="product-card">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 style="color:#D4AF37;">Painel de Controle</h1>
+            </div>
+            <div class="col-md-4 text-right">
+                <a href="@Url.Action("Logout", "Funcionario")" class="btn btn-danger">
+                    Sair (Logout)
+                </a>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="alert alert-success">
+            <h2>Bem-vindo(a), @Session["NomeFuncionario"]!</h2>
+            <p>Você acessou uma área restrita do sistema com sucesso.</p>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="dashboard-card text-center p-4">
+                    <h3>Gerenciar Produtos</h3>
+                    <p>Cadastre, edite e exclua produtos da loja.</p>
+                    <a href="@Url.Action("AdminIndex", "Produto")" class="btn btn-gold">
+                        Acessar Módulo
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="dashboard-card text-center p-4">
+                    <h3>Gerenciar Clientes</h3>
+                    <p>Visualize e administre os clientes cadastrados.</p>
+                    <a href="@Url.Action("AdminIndex", "Cliente")" class="btn btn-gold">
+                        Acessar Módulo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

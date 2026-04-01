@@ -1,0 +1,82 @@
+﻿@model CardGameP.Models.Produto
+
+@{
+    ViewBag.Title = Model.Nome + " - Detalhes";
+}
+
+<div class="container mt-4 mb-5">
+    <a href="@Url.Action("Index", "Produto")" class="text-white-50 text-decoration-none small mb-3 d-inline-block">
+        &larr; Voltar para a vitrine
+    </a>
+
+    <div class="product-card p-4">
+        <div class="row align-items-center">
+
+            <div class="col-md-5 text-center mb-4 mb-md-0">
+                <div style="background-color: #121212; padding: 20px; border-radius: 15px; border: 1px solid #333;">
+                    <img src="@Url.Content(!string.IsNullOrEmpty(Model.imagem) ? Model.imagem : "~/Content/Image/sem-foto.png")"
+                         alt="@Model.Nome"
+                         class="img-fluid"
+                         style="max-height: 400px; object-fit: contain; border-radius: 10px;" />
+                </div>
+            </div>
+
+            <div class="col-md-7 text-white">
+                <h1 style="color:#D4AF37; font-weight: bold;" class="mb-2">@Model.Nome</h1>
+                <p class="text-white-50 fs-5 mb-3">Expansão/Jogo: <span class="text-white">@Model.Jogo</span></p>
+
+                <div class="mb-4">
+                    <span class="badge bg-dark text-warning border border-warning px-3 py-2 fs-6">
+                        Raridade: @Model.Raridade
+                    </span>
+                    <span class="badge bg-dark text-white-50 border border-secondary px-3 py-2 fs-6 ms-2">
+                        Estoque: @Model.Estoque unid.
+                    </span>
+                </div>
+
+                <hr style="border-color: #444;" />
+
+                <div class="mb-4">
+                    <p class="text-white-50 mb-1">Preço unitário:</p>
+                    <h2 style="color: #00c26e; font-weight: bold; font-size: 2.5rem;">R$ @Model.Preco.ToString("N2")</h2>
+                </div>
+
+                @if (Model.Estoque > 0)
+                {
+                    using (Html.BeginForm("AdicionarAoCarrinho", "Carrinho", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="idProduto" value="@Model.IdProduto" />
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-auto">
+                                <label class="text-white-50 small d-block mb-1">Qtd:</label>
+                                <input type="number" name="quantidade" class="form-control search-input text-center"
+                                       value="1" min="1" max="@Model.Estoque" style="width: 80px;" />
+                            </div>
+
+                            <div class="col">
+                                <label class="d-block mb-1">&nbsp;</label>
+                                <button type="submit" class="btn btn-outline-warning w-100" style="border-color: #D4AF37; color: #D4AF37;">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i> Adicionar ao Carrinho
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" name="comprarAgora" value="true" class="btn btn-gold w-100 fs-5 fw-bold py-2">
+                            Comprar Agora
+                        </button>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-secondary bg-dark text-white-50 border-secondary mt-3">
+                        <i class="glyphicon glyphicon-info-sign"></i> No momento este card está esgotado.
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

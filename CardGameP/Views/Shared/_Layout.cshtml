@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CardGame Store</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header class="top-header">
+        <div class="container">
+            <div class="row header-row">
+                <div class="col-md-3 col-sm-12 logo-area">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/Image/DigitalDeckLogo.png" alt="CardGame Store" class="logo-img" />
+                    </a>
+                </div>
+
+                <div class="col-md-5 col-sm-12 search-area">
+                    <form class="search-form" action="@Url.Action("Index", "Produto")" method="get">
+                        <input type="text" name="busca" class="form-control search-input" placeholder="O que você procura?" />
+                        <button type="submit" class="btn btn-gold search-btn">Buscar</button>
+                    </form>
+                </div>
+
+                <div class="col-md-4 col-sm-12 account-area text-right">
+                    <a href="@Url.Action("Login", "Cliente")" class="header-link">
+                        <span class="glyphicon glyphicon-log-in"></span> Entrar
+                    </a>
+
+                    <span class="header-separator">/</span>
+
+                    <a href="@Url.Action("Cadastrar", "Cliente")" class="header-link">
+                        <span class="glyphicon glyphicon-user"></span> Cadastrar
+                    </a>
+
+                    <div class="header-phone">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <ul class="main-menu">
+        <li>
+            <a href="@Url.Action("Index", "Home")">
+                <span class="glyphicon glyphicon-home"></span> Início
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Produto")">
+                <span class="glyphicon glyphicon-th-large"></span> Produtos
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Login", "Funcionario")">
+                <span class="glyphicon glyphicon-lock"></span> Funcionário
+            </a>
+        </li>
+    </ul>
+
+    <main class="container body-content">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>CardGame Store</h4>
+                    <p>Sua loja virtual de card games com estilo, organização e praticidade.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h4>Contato</h4>
+                    <p><span class="glyphicon glyphicon-earphone"></span> Telefone: (11) 2311-2231</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> Email: contato@cardgamestore.com</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h4>Endereço</h4>
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Rua Exemplo, 123</p>
+                    <p>Centro - São Paulo/SP</p>
+                </div>
+            </div>
+
+            <hr />
+            <p class="text-center">&copy; @DateTime.Now.Year - CardGame Store</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

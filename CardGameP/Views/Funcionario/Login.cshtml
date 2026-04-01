@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Login do Funcionário";
+}
+
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+
+    <div style="width: 100%; max-width: 400px;">
+
+        <div class="product-card p-4">
+
+            <div class="text-center mb-4">
+                <h2 style="color:#D4AF37;">Login do Funcionário</h2>
+                <p class="text-white-50">Área administrativa da loja</p>
+            </div>
+
+            @if (ViewBag.Erro != null)
+            {
+                <div class="alert alert-danger bg-dark text-danger border-danger mb-3">
+                    <i class="glyphicon glyphicon-exclamation-sign"></i> @ViewBag.Erro
+                </div>
+            }
+
+            @using (Html.BeginForm("Login", "Funcionario", FormMethod.Post))
+            {
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">Email</label>
+                    <input type="email" name="email" class="form-control search-input" placeholder="Ex: admin@cardgame.com" required />
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="text-white mb-1">Senha</label>
+                    <input type="password" name="senha" class="form-control search-input" placeholder="••••••" required />
+                </div>
+
+                <button type="submit" class="btn btn-gold w-100 mt-3">
+                    Entrar
+                </button>
+            }
+        </div>
+
+    </div>
+</div>

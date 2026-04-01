@@ -1,0 +1,83 @@
+﻿@model CardGameP.Models.Produto
+
+@{
+    ViewBag.Title = "Editar Produto";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 style="color:#D4AF37;">Editar Produto</h1>
+
+        <a href="@Url.Action("AdminIndex", "Produto")" class="btn btn-outline-light">
+            Voltar para a Lista
+        </a>
+    </div>
+
+    <hr />
+
+    <div class="product-card p-4">
+        @using (Html.BeginForm("Edit", "Produto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.IdProduto)
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Nome do Produto</label>
+                            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control search-input" })
+                            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Preço (R$)</label>
+                            @Html.TextBoxFor(m => m.Preco, new { @class = "form-control search-input", type = "number", step = "0.01" })
+                            @Html.ValidationMessageFor(m => m.Preco, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Jogo</label>
+                            @Html.TextBoxFor(m => m.Jogo, new { @class = "form-control search-input" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Raridade</label>
+                            @Html.TextBoxFor(m => m.Raridade, new { @class = "form-control search-input" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Estoque</label>
+                            @Html.TextBoxFor(m => m.Estoque, new { @class = "form-control search-input", type = "number" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-white">Alterar Imagem</label>
+                            <input type="file" name="fotoUpload" class="form-control search-input" accept=".jpg,.jpeg,.png,.webp" />
+                            <small class="text-muted">Deixe em branco para manter a imagem atual.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <label class="text-white d-block mb-2">Imagem Atual</label>
+                    @if (!string.IsNullOrEmpty(Model.imagem))
+                    {
+                        <img src="@Url.Content(Model.imagem)" alt="@Model.Nome" class="img-responsive img-thumbnail center-block product-image" style="max-height: 200px;" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/Image/sem-foto.png")" alt="Sem foto" class="img-responsive img-thumbnail center-block product-image" style="max-height: 200px;" />
+                    }
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-gold px-4">
+                    Salvar Alterações
+                </button>
+            </div>
+        }
+    </div>
+</div>
