@@ -23,7 +23,7 @@
 
             <div class="col-md-7 text-white">
                 <h1 style="color:#D4AF37; font-weight: bold;" class="mb-2">@Model.Nome</h1>
-                <p class="text-white-50 fs-5 mb-3">Expansão/Jogo: <span class="text-white">@Model.Jogo</span></p>
+                <p class="text-white-50 fs-5 mb-3">Expansão/Jogo: <span class="text-white">@(Model.Jogo?.Nome ?? "Não informado")</span></p>
 
                 <div class="mb-4">
                     <span class="badge bg-dark text-warning border border-warning px-3 py-2 fs-6">
