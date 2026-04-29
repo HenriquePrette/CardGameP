@@ -1,30 +1,30 @@
 ﻿@model IEnumerable<CardGameP.Models.Cliente>
 
 @{
-    ViewBag.Title = "Clientes";
+    ViewBag.Title = "Gerenciamento de Clientes";
 }
 
 <div class="container mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Lista de Clientes</h3>
+    <div class="card shadow-sm border-warning" style="background-color: #1a1a1a; border: 1px solid #D4AF37;">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center" style="border-bottom: 1px solid #D4AF37;">
+            <h3 class="mb-0" style="color: #D4AF37;">Painel de Treinadores</h3>
             <a href="@Url.Action("Create", "Cliente")" class="btn btn-gold btn-sm">
-                + Novo Cliente
+                <i class="bi bi-person-plus"></i> + Novo Cliente
             </a>
         </div>
 
-        <div class="card-body">
+        <div class="card-body text-white">
             @if (Model != null && Model.Any())
             {
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered align-middle">
-                        <thead class="table-dark">
+                    <table class="table table-dark table-hover align-middle border-secondary">
+                        <thead class="table-dark text-warning">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Telefone</th>
-                                <th>Data de Cadastro</th>
+                                <th>Cadastro</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
@@ -32,21 +32,23 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.IdCliente</td>
-                                    <td>@item.Nome</td>
+                                    <td class="text-muted">#@item.IdCliente</td>
+                                    <td class="fw-bold">@item.Nome</td>
                                     <td>@item.Email</td>
                                     <td>@item.Telefone</td>
                                     <td>@item.DataCadastro.ToShortDateString()</td>
                                     <td class="text-center">
-                                        <a href="@Url.Action("Edit", "Cliente", new { id = item.IdCliente })" class="btn btn-warning btn-sm">
-                                            Editar
-                                        </a>
-                                        <a href="@Url.Action("Details", "Cliente", new { id = item.IdCliente })" class="btn btn-info btn-sm text-white">
-                                            Detalhes
-                                        </a>
-                                        <a href="@Url.Action("Delete", "Cliente", new { id = item.IdCliente })" class="btn btn-danger btn-sm">
-                                            Excluir
-                                        </a>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Edit", "Cliente", new { id = item.IdCliente })" class="btn btn-warning btn-sm" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="@Url.Action("Details", "Cliente", new { id = item.IdCliente })" class="btn btn-info btn-sm text-white" title="Detalhes">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "Cliente", new { id = item.IdCliente })" class="btn btn-danger btn-sm" title="Excluir">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -56,8 +58,8 @@
             }
             else
             {
-                <div class="alert alert-info text-center mb-0">
-                    Nenhum cliente cadastrado no sistema.
+                <div class="alert alert-dark text-center mb-0 border-secondary">
+                    <i class="bi bi-info-circle"></i> Nenhum treinador cadastrado no sistema.
                 </div>
             }
         </div>

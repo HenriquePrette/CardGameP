@@ -33,7 +33,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="text-white">Preço (R$)</label>
-                            @Html.TextBoxFor(m => m.Preco, new { @class = "form-control search-input", type = "number", step = "0.01" })
+                            @* Correção: Removido type="number" para permitir vírgula decimal *@
+                            @Html.TextBoxFor(m => m.Preco, new { @class = "form-control search-input" })
                             @Html.ValidationMessageFor(m => m.Preco, "", new { @class = "text-danger" })
                         </div>
 

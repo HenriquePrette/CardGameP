@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CardGameP.Models.Pedido>
+@{
+    var cliente = Session["ClienteLogado"] as CardGameP.Models.Cliente;
+    var carrinho = ViewBag.CarrinhoAtual as List<CardGameP.Models.ItemCarrinho>;
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-dark text-white border-warning p-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-person-circle" style="font-size: 5rem; color: #D4AF37;"></i>
+                    <h3 class="mt-2">@cliente.Nome</h3>
+                    <p class="text-muted">@cliente.Email</p>
+                    <hr border-warning>
+                    <a href="@Url.Action("Logout", "Cliente")" class="btn btn-sm btn-outline-danger w-100">Sair da Conta</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+
+            <h4 style="color: #D4AF37;"><i class="bi bi-cart3"></i> Itens no seu Carrinho</h4>
+            <div class="card bg-dark text-white border-secondary mb-5 p-3">
+                @if (carrinho != null && carrinho.Any())
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in carrinho)
+                        {
+                            <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                @item.Nome (x @item.Quantidade)
+                                <span class="badge bg-success">@item.Total.ToString("C")</span>
+                            </li>
+                        }
+                    </ul>
+                    <a href="@Url.Action("Index", "Carrinho")" class="btn btn-warning mt-3">Ir para o Carrinho</a>
+                }
+                else
+                {
+                    <p class="text-muted m-0">Seu carrinho está vazio.</p>
+                }
+            </div>
+
+            <h4 style="color: #D4AF37;"><i class="bi bi-shield-check"></i> Histórico de Compras</h4>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var pedido in Model)
+                {
+                    <div class="card bg-dark text-white border-secondary mb-3">
+                        <div class="card-header d-flex justify-content-between border-secondary">
+                            <span><strong>Pedido #@pedido.IdPedido</strong></span>
+                            <span class="text-warning">@pedido.DataPedido.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="m-0">Status: <span class="badge bg-info">@pedido.Status</span></p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-secondary bg-dark text-muted border-secondary">
+                    Você ainda não realizou nenhuma compra.
+                </div>
+            }
+        </div>
+    </div>
+</div>

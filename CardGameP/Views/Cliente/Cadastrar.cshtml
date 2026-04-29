@@ -5,9 +5,7 @@
 }
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-
     <div style="width: 100%; max-width: 500px;">
-
         <div class="product-card p-4">
 
             <div class="text-center mb-4">
@@ -41,7 +39,8 @@
 
                 <div class="mb-3 text-start">
                     <label class="text-white mb-1">Senha</label>
-                    @Html.PasswordFor(m => m.Senha, new { @class = "form-control search-input", placeholder = "Mínimo 6 caracteres", required = "required" })
+                    @* Adicionado autocomplete="off" para maior segurança *@
+                    @Html.PasswordFor(m => m.Senha, new { @class = "form-control search-input", placeholder = "Mínimo 6 caracteres", required = "required", autocomplete = "off" })
                     @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger small" })
                 </div>
 
@@ -54,6 +53,5 @@
                 </div>
             }
         </div>
-
     </div>
 </div>

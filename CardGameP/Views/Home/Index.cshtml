@@ -4,12 +4,25 @@
     ViewBag.Title = "Início";
 }
 
+@if (TempData["Erro"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger alert-dismissible fade show bg-dark text-danger border-danger" role="alert">
+            <strong>Ops!</strong> @TempData["Erro"]
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
 <div class="hero-home text-center">
     <h1>CardGame Store</h1>
     <p class="hero-subtitle">
         Encontre cartas, coleções e produtos em destaque para sua jornada no mundo dos card games.
     </p>
     <a href="@Url.Action("Index", "Produto")" class="btn btn-gold btn-lg">Ver todos os produtos</a>
+    <a href="@Url.Action("Index", "Perfil")" class="btn btn-outline-warning btn-lg">
+        <i class="bi bi-person-circle"></i> Meu Perfil
+    </a>
 </div>
 
 <section class="product-showcase container mt-5">
@@ -24,23 +37,21 @@
             <div class="carousel-inner">
 
                 @{
-                    int itensPorSlide = 4; // Mostra de 4 em 4
+                    int itensPorSlide = 4;
                     int totalDeCards = Model.Count;
                 }
 
                 @for (int i = 0; i < totalDeCards; i += itensPorSlide)
                 {
-                    @* O primeiro slide precisa obrigatoriamente da classe "active" *@
                     <div class="carousel-item @(i == 0 ? "active" : "")">
                         <div class="row justify-content-center">
 
-                            @* Gera os cards da página atual *@
                             @for (int j = i; j < i + itensPorSlide && j < totalDeCards; j++)
                             {
                                 var item = Model[j];
 
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="product-card p-3" style="border: 1px solid #D4AF37; border-radius: 10px; background-color: #1a1a1a; height: 100%;">
+                                    <div class="product-card p-3" style="border: 1px solid #D4AF37; border-radius: 10px; background-color: #1a1a1a; height: 100%; transition: 0.3s;">
 
                                         <div class="text-center mb-3">
                                             <img src="@Url.Content(!string.IsNullOrEmpty(item.imagem) ? item.imagem : "~/Content/Image/sem-foto.png")"
@@ -54,10 +65,17 @@
                                             <p class="text-muted mb-1 small">@item.Jogo</p>
                                             <h4 style="color: #00c26e; font-weight: bold;">R$ @item.Preco.ToString("N2")</h4>
 
-                                            <a href="@Url.Action("Details", "Produto", new { id = item.IdProduto })"
-                                               class="btn btn-gold w-100 mt-2">
-                                                Ver Detalhes
-                                            </a>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <a href="@Url.Action("Details", "Produto", new { id = item.IdProduto })"
+                                                   class="btn btn-sm btn-outline-light">
+                                                    Ver Detalhes
+                                                </a>
+
+                                                <a href="@Url.Action("Adicionar", "Carrinho", new { id = item.IdProduto })"
+                                                   class="btn btn-sm btn-gold">
+                                                    <i class="bi bi-cart-plus"></i> Comprar
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

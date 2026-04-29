@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CardGameP.Models.ItemCarrinho>
+
+<div class="container mt-4">
+    <h2 style="color: #D4AF37;">Meu Carrinho</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-dark table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Qtd</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nome</td>
+                        <td>@item.Preco.ToString("C")</td>
+                        <td>@item.Quantidade</td>
+                        <td>@item.Total.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-end mt-4">
+            <h3 class="text-white">Total: @Model.Sum(x => x.Total).ToString("C")</h3>
+
+            @using (Html.BeginForm("FinalizarPedido", "Carrinho", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <a href="@Url.Action("Index", "Produto")" class="btn btn-outline-light">Continuar Comprando</a>
+                <button type="submit" class="btn btn-success">Finalizar Compra</button>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">Seu carrinho está vazio.</div>
+        <a href="@Url.Action("Index", "Produto")" class="btn btn-gold">Ir para a Loja</a>
+    }
+</div>

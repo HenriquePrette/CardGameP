@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using CardGameP.Models;
+using BCrypt.Net; 
 
 namespace CardGameP.Controllers
 {
@@ -34,7 +35,6 @@ namespace CardGameP.Controllers
             {
                 return RedirectToAction("Index", "Produto");
             }
-
             return View();
         }
 
@@ -49,10 +49,11 @@ namespace CardGameP.Controllers
                     var emailExistente = db.Clientes.FirstOrDefault(c => c.Email == cliente.Email);
                     if (emailExistente != null)
                     {
-                        ModelState.AddModelError("Email", "Este e-mail já está a ser utilizado por outra conta.");
+                        ModelState.AddModelError("Email", "Este e-mail já está sendo utilizado.");
                         return View(cliente);
                     }
 
+                    cliente.Senha = BCrypt.Net.BCrypt.HashPassword(cliente.Senha);
                     cliente.DataCadastro = DateTime.Now;
 
                     db.Clientes.Add(cliente);
@@ -62,20 +63,9 @@ namespace CardGameP.Controllers
                 }
                 catch (Exception ex)
                 {
-                    string mensagemErro = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        mensagemErro = ex.InnerException.Message;
-                        if (ex.InnerException.InnerException != null)
-                        {
-                            mensagemErro = ex.InnerException.InnerException.Message;
-                        }
-                    }
-
-                    ModelState.AddModelError("", "Erro no banco: " + mensagemErro);
+                    ModelState.AddModelError("", "Erro ao salvar no banco: " + ex.Message);
                 }
             }
-
             return View(cliente);
         }
 
@@ -94,21 +84,47 @@ namespace CardGameP.Controllers
         {
             try
             {
-                var clienteNoBanco = db.Clientes.FirstOrDefault(c => c.Email == clienteFormulario.Email && c.Senha == clienteFormulario.Senha);
+                var clienteNoBanco = db.Clientes.FirstOrDefault(c => c.Email == clienteFormulario.Email);
 
                 if (clienteNoBanco != null)
                 {
-                    Session["ClienteLogado"] = clienteNoBanco;
-                    Session["ClienteNome"] = clienteNoBanco.Nome;
+                    bool senhaValida = false;
+                    bool precisaMigrarParaHash = false;
 
-                    return RedirectToAction("Index", "Produto");
+                    if (clienteNoBanco.Senha.StartsWith("$2"))
+                    {
+                        senhaValida = BCrypt.Net.BCrypt.Verify(clienteFormulario.Senha, clienteNoBanco.Senha);
+                    }
+                    else
+                    {
+                        if (clienteNoBanco.Senha == clienteFormulario.Senha)
+                        {
+                            senhaValida = true;
+                            precisaMigrarParaHash = true; 
+                        }
+                    }
+
+                    if (senhaValida)
+                    {
+                        if (precisaMigrarParaHash)
+                        {
+                            clienteNoBanco.Senha = BCrypt.Net.BCrypt.HashPassword(clienteFormulario.Senha);
+                            db.Entry(clienteNoBanco).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+
+                        Session["ClienteLogado"] = clienteNoBanco;
+                        Session["ClienteNome"] = clienteNoBanco.Nome;
+
+                        return RedirectToAction("Index", "Produto");
+                    }
                 }
 
                 ModelState.AddModelError("", "E-mail ou senha incorretos.");
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Erro ao tentar conectar com o banco de dados: " + ex.Message);
+                ModelState.AddModelError("", "Erro ao conectar com o banco: " + ex.Message);
             }
 
             return View(clienteFormulario);
@@ -118,7 +134,6 @@ namespace CardGameP.Controllers
         {
             Session["ClienteLogado"] = null;
             Session["ClienteNome"] = null;
-
             return RedirectToAction("Index", "Home");
         }
     }

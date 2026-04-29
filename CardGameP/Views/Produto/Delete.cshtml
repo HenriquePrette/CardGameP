@@ -16,7 +16,6 @@
     <hr style="border-color: #555;" />
 
     <div class="product-card p-4">
-        @* O novalidate também vai aqui para garantir a edição perfeita de decimais *@
         @using (Html.BeginForm("Edit", "Produto", FormMethod.Post, new { enctype = "multipart/form-data", novalidate = "novalidate" }))
         {
             @Html.AntiForgeryToken()
@@ -34,7 +33,6 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="text-white">Preço (R$)</label>
-                            @* Mudado para texto livre igual ao Create *@
                             @Html.TextBoxFor(m => m.Preco, new { @class = "form-control search-input", placeholder = "Ex: 129,90" })
                             @Html.ValidationMessageFor(m => m.Preco, "", new { @class = "text-danger" })
                         </div>

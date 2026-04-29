@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CardGameP.Models
 {
@@ -7,10 +8,13 @@ namespace CardGameP.Models
         [Key]
         public int IdProduto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O nome é obrigatório")]
         public string Nome { get; set; }
 
-        public string Jogo { get; set; }
+        public int IdJogo { get; set; }
+
+        [ForeignKey("IdJogo")]
+        public virtual Jogo Jogo { get; set; }
 
         public string Raridade { get; set; }
 
