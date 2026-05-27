@@ -39,7 +39,6 @@
 
                 <div class="mb-3 text-start">
                     <label class="text-white mb-1">Senha</label>
-                    @* Adicionado autocomplete="off" para maior segurança *@
                     @Html.PasswordFor(m => m.Senha, new { @class = "form-control search-input", placeholder = "Mínimo 6 caracteres", required = "required", autocomplete = "off" })
                     @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger small" })
                 </div>

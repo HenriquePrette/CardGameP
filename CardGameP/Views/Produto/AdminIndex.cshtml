@@ -20,12 +20,12 @@
 
     <hr style="border-color: #555;" />
 
-    <div class="product-card mb-4 p-3">
+    <div class="product-card mb-4 p-3" style="min-height: auto !important; height: auto !important; overflow: hidden;">
         <h5 class="mb-3" style="color:#D4AF37;">Buscar produto</h5>
 
         @using (Html.BeginForm("AdminIndex", "Produto", FormMethod.Get))
         {
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3" style="margin-bottom: 0 !important;">
                 <input type="text" name="busca"
                        class="form-control search-input search-small"
                        placeholder="Buscar por nome ou jogo..." />
@@ -70,7 +70,7 @@
 
                             <td>@item.Nome</td>
 
-                            <td>@item.Jogo</td>
+                            <td>@(item.Jogo?.Nome ?? "Sem Jogo")</td>
 
                             <td>@item.Raridade</td>
 
