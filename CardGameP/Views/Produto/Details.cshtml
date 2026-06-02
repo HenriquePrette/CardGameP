@@ -15,7 +15,7 @@
             <div class="col-md-5 text-center mb-4 mb-md-0">
                 <div style="background-color: #121212; padding: 20px; border-radius: 15px; border: 1px solid #333;">
                     <img src="@Url.Content(!string.IsNullOrEmpty(Model.imagem) ? Model.imagem : "~/Content/Image/sem-foto.png")"
-                         alt="@Model.Nome"
+                         alt="Card do produto @Model.Nome - Jogo: @(Model.Jogo?.Nome ?? "Não informado")"
                          class="img-fluid"
                          style="max-height: 400px; object-fit: contain; border-radius: 10px;" />
                 </div>
@@ -43,11 +43,11 @@
 
                 @if (Model.Estoque > 0)
                 {
-                    using (Html.BeginForm("AdicionarAoCarrinho", "Carrinho", FormMethod.Post))
+                    /* AJUSTADO: Mudou de "AdicionarAoCarrinho" para "Adicionar" e o método para GET para casar com seu Controller */
+                    using (Html.BeginForm("Adicionar", "Carrinho", FormMethod.Get))
                     {
-                        @Html.AntiForgeryToken()
-
-                        <input type="hidden" name="idProduto" value="@Model.IdProduto" />
+                        /* AJUSTADO: O nome do campo do ID mudou de "idProduto" para "id" para mapear corretamente com a Action */
+                        <input type="hidden" name="id" value="@Model.IdProduto" />
 
                         <div class="row g-3 align-items-center mb-4">
                             <div class="col-auto">
@@ -59,12 +59,12 @@
                             <div class="col">
                                 <label class="d-block mb-1">&nbsp;</label>
                                 <button type="submit" class="btn btn-outline-warning w-100" style="border-color: #D4AF37; color: #D4AF37;">
-                                    <i class="glyphicon glyphicon-shopping-cart"></i> Adicionar ao Carrinho
+                                    <i class="bi bi-cart-plus"></i> Adicionar ao Carrinho
                                 </button>
                             </div>
                         </div>
 
-                        <button type="submit" name="comprarAgora" value="true" class="btn btn-gold w-100 fs-5 fw-bold py-2">
+                        <button type="submit" class="btn btn-gold w-100 fs-5 fw-bold py-2">
                             Comprar Agora
                         </button>
                     }
@@ -72,7 +72,7 @@
                 else
                 {
                     <div class="alert alert-secondary bg-dark text-white-50 border-secondary mt-3">
-                        <i class="glyphicon glyphicon-info-sign"></i> No momento este card está esgotado.
+                        <i class="bi bi-info-circle"></i> No momento este card está esgotado.
                     </div>
                 }
 

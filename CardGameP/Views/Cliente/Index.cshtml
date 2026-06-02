@@ -4,48 +4,58 @@
     ViewBag.Title = "Gerenciamento de Clientes";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-sm border-warning" style="background-color: #1a1a1a; border: 1px solid #D4AF37;">
-        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center" style="border-bottom: 1px solid #D4AF37;">
-            <h3 class="mb-0" style="color: #D4AF37;">Painel de Treinadores</h3>
-            <a href="@Url.Action("Create", "Cliente")" class="btn btn-gold btn-sm">
-                <i class="bi bi-person-plus"></i> + Novo Cliente
+<div class="container mt-4 mb-5">
+    <a href="javascript:history.back()" class="text-white-50 text-decoration-none small mb-3 d-inline-flex align-items-center gap-1" style="transition: color 0.2s;" title="Voltar para a tela anterior">
+        <i class="bi bi-arrow-left"></i> Voltar uma tela
+    </a>
+
+    <div class="card shadow-sm border-warning" style="background-color: #1a1a1a; border: 1px solid #D4AF37; border-radius: 8px; overflow: hidden;">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-3" style="border-bottom: 1px solid #D4AF37;">
+            <h3 class="mb-0 fw-bold" style="color: #D4AF37;">Painel de Treinadores</h3>
+            <a href="@Url.Action("Create", "Cliente")" class="btn btn-gold btn-sm d-inline-flex align-items-center gap-1 fw-bold">
+                <i class="bi bi-person-plus"></i> Novo Cliente
             </a>
         </div>
 
-        <div class="card-body text-white">
+        <div class="card-body text-white p-0">
             @if (Model != null && Model.Any())
             {
                 <div class="table-responsive">
-                    <table class="table table-dark table-hover align-middle border-secondary">
-                        <thead class="table-dark text-warning">
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Cadastro</th>
-                                <th class="text-center">Ações</th>
+                    <table class="table table-dark table-hover align-middle mb-0" style="border-color: #333;">
+                        <thead>
+                            <tr class="text-white-50" style="border-bottom: 2px solid #333;">
+                                <th class="ps-3" style="color: #D4AF37;">ID</th>
+                                <th style="color: #D4AF37;">Nome</th>
+                                <th style="color: #D4AF37;">Email</th>
+                                <th style="color: #D4AF37;">Telefone</th>
+                                <th style="color: #D4AF37;">Cadastro</th>
+                                <th class="text-center pe-3" style="color: #D4AF37;">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td class="text-muted">#@item.IdCliente</td>
-                                    <td class="fw-bold">@item.Nome</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.Telefone</td>
-                                    <td>@item.DataCadastro.ToShortDateString()</td>
-                                    <td class="text-center">
-                                        <div class="btn-group">
-                                            <a href="@Url.Action("Edit", "Cliente", new { id = item.IdCliente })" class="btn btn-warning btn-sm" title="Editar">
+                                <tr style="border-bottom: 1px solid #292929;">
+                                    <td class="text-muted ps-3">#@item.IdCliente</td>
+                                    <td class="fw-bold text-white">@item.Nome</td>
+                                    <td class="text-white-50">@item.Email</td>
+                                    <td class="text-white-50">@item.Telefone</td>
+                                    <td class="text-white-50">@item.DataCadastro.ToShortDateString()</td>
+                                    <td class="text-center pe-3">
+                                        <div class="btn-group" role="group" aria-label="Ações do cliente">
+                                            <a href="@Url.Action("Edit", "Cliente", new { id = item.IdCliente })"
+                                               class="btn btn-sm btn-outline-warning d-inline-flex align-items-center"
+                                               title="Editar Treinador" style="border-radius: 4px 0 0 4px;">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <a href="@Url.Action("Details", "Cliente", new { id = item.IdCliente })" class="btn btn-info btn-sm text-white" title="Detalhes">
+                                            <a href="@Url.Action("Details", "Cliente", new { id = item.IdCliente })"
+                                               class="btn btn-sm btn-outline-info d-inline-flex align-items-center text-info"
+                                               title="Detalhes do Treinador">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="@Url.Action("Delete", "Cliente", new { id = item.IdCliente })" class="btn btn-danger btn-sm" title="Excluir">
+                                            <a href="@Url.Action("Delete", "Cliente", new { id = item.IdCliente })"
+                                               class="btn btn-sm btn-outline-danger d-inline-flex align-items-center"
+                                               title="Excluir Treinador" style="border-radius: 0 4px 4px 0;">
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </div>
@@ -58,8 +68,11 @@
             }
             else
             {
-                <div class="alert alert-dark text-center mb-0 border-secondary">
-                    <i class="bi bi-info-circle"></i> Nenhum treinador cadastrado no sistema.
+                <div class="p-4">
+                    <div class="alert alert-secondary bg-dark text-white-50 border-secondary p-4 text-center mb-0">
+                        <i class="bi bi-info-circle fs-3 d-block mb-2 text-warning"></i>
+                        <span>Nenhum treinador cadastrado no sistema.</span>
+                    </div>
                 </div>
             }
         </div>

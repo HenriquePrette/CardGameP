@@ -1,46 +1,74 @@
 ﻿@model IEnumerable<CardGameP.Models.ItemCarrinho>
 
-<div class="container mt-4">
-    <h2 style="color: #D4AF37;">Meu Carrinho</h2>
+@{
+    ViewBag.Title = "Meu Carrinho";
+}
+
+<div class="container mt-4 mb-5">
+    <h2 style="color: #D4AF37; font-weight: bold;" class="mb-4">Meu Carrinho</h2>
 
     @if (Model != null && Model.Any())
     {
-        <table class="table table-dark table-hover mt-3">
+        <table class="table table-dark table-hover mt-3" style="border-color: #333;">
             <thead>
-                <tr>
+                <tr class="text-white-50">
                     <th>Produto</th>
                     <th>Preço</th>
-                    <th>Qtd</th>
+                    <th class="text-center">Qtd</th>
                     <th>Total</th>
+                    <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Nome</td>
-                        <td>@item.Preco.ToString("C")</td>
-                        <td>@item.Quantidade</td>
-                        <td>@item.Total.ToString("C")</td>
+                        <td class="align-middle text-white fw-bold">@item.Nome</td>
+                        <td class="align-middle text-white-50">R$ @item.Preco.ToString("N2")</td>
+                        <td class="align-middle text-center text-white">@item.Quantidade</td>
+                        <td class="align-middle" style="color: #00c26e; font-weight: bold;">R$ @item.Total.ToString("N2")</td>
+
+                        <td class="text-center align-middle">
+                            <a href="@Url.Action("Remover", "Carrinho", new { id = item.IdProduto })"
+                               class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1"
+                               title="Remover produto do carrinho"
+                               onclick="return confirm('Tem certeza que deseja remover @item.Nome do carrinho?');"
+                               style="border-radius: 6px; font-weight: bold; padding: 5px 12px; transition: all 0.2s;">
+                                <i class="bi bi-trash"></i> Remover
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
 
-        <div class="text-end mt-4">
-            <h3 class="text-white">Total: @Model.Sum(x => x.Total).ToString("C")</h3>
+        <div class="text-end mt-4 p-3 rounded" style="background-color: #121212; border: 1px solid #222;">
+            <h3 class="text-white mb-3">
+                Total: <span style="color: #00c26e; font-weight: bold;">R$ @Model.Sum(x => x.Total).ToString("N2")</span>
+            </h3>
 
-            @using (Html.BeginForm("FinalizarPedido", "Carrinho", FormMethod.Post))
+            @using (Html.BeginForm("FinalizarPedido", "Carrinho", FormMethod.Post, new { @class = "d-inline-block" }))
             {
                 @Html.AntiForgeryToken()
-                <a href="@Url.Action("Index", "Produto")" class="btn btn-outline-light">Continuar Comprando</a>
-                <button type="submit" class="btn btn-success">Finalizar Compra</button>
+
+                <a href="@Url.Action("Index", "Produto")" class="btn btn-outline-light me-2" style="font-weight: 500;">
+                    Continuar Comprando
+                </a>
+
+                <button type="submit" class="btn btn-success fw-bold px-4" style="background-color: #198754; border-color: #198754;">
+                    <i class="bi bi-check-circle"></i> Finalizar Compra
+                </button>
             }
         </div>
     }
     else
     {
-        <div class="alert alert-info">Seu carrinho está vazio.</div>
-        <a href="@Url.Action("Index", "Produto")" class="btn btn-gold">Ir para a Loja</a>
+        <div class="alert alert-secondary bg-dark text-white-50 border-secondary p-4 text-center mt-4">
+            <i class="bi bi-cart-x fs-1 d-block mb-2 text-warning"></i>
+            <span class="fs-5 d-block mb-3">Seu carrinho está vazio no momento.</span>
+            <a href="@Url.Action("Index", "Produto")" class="btn btn-gold fw-bold px-4 py-2">
+                Ir para a Vitrine
+            </a>
+        </div>
     }
 </div>

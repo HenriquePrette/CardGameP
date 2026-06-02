@@ -19,10 +19,19 @@
     <p class="hero-subtitle">
         Encontre cartas, coleções e produtos em destaque para sua jornada no mundo dos card games.
     </p>
-    <a href="@Url.Action("Index", "Produto")" class="btn btn-gold btn-lg">Ver todos os produtos</a>
-    <a href="@Url.Action("Index", "Perfil")" class="btn btn-outline-warning btn-lg">
-        <i class="bi bi-person-circle"></i> Meu Perfil
-    </a>
+
+    <div class="hero-actions d-flex justify-content-center gap-3">
+        <a href="@Url.Action("Index", "Produto")" class="btn btn-gold btn-lg">Ver todos os produtos</a>
+
+        @if (Session["ClienteLogado"] != null || Session["UsuarioLogado"] != null || Session["IdCliente"] != null)
+        {
+            <a href="@Url.Action("Index", "Perfil")"
+               class="btn btn-lg"
+               style="color: #E0E0E0 !important; background-color: #1a1a1a !important; border: 1px solid #D4AF37 !important; font-weight: bold !important; padding: 10px 20px !important; border-radius: 8px !important; text-decoration: none !important;">
+                <i class="bi bi-person-circle"></i> Meu Perfil
+            </a>
+        }
+    </div>
 </div>
 
 <section class="product-showcase container mt-5">
@@ -55,7 +64,7 @@
 
                                         <div class="text-center mb-3">
                                             <img src="@Url.Content(!string.IsNullOrEmpty(item.imagem) ? item.imagem : "~/Content/Image/sem-foto.png")"
-                                                 alt="@item.Nome"
+                                                 alt="Card do produto @item.Nome - Jogo: @(item.Jogo?.Nome ?? "Não especificado")"
                                                  class="img-fluid"
                                                  style="max-height: 220px; object-fit: contain; border-radius: 8px;" />
                                         </div>

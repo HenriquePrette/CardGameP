@@ -51,6 +51,33 @@ namespace CardGameP.Controllers
             }
         }
 
+        public ActionResult Remover(int id)
+        {
+            try
+            {
+                var carrinho = Session["Carrinho"] as List<ItemCarrinho>;
+
+                if (carrinho != null)
+                {
+                    var item = carrinho.FirstOrDefault(x => x.IdProduto == id);
+
+                    if (item != null)
+                    {
+                        carrinho.Remove(item);
+                    }
+
+                    Session["Carrinho"] = carrinho;
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = "Erro ao remover o produto: " + ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult FinalizarPedido()
