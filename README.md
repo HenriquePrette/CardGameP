@@ -1,3 +1,4 @@
+Update-Database
 # 🃏 CardGameP - Loja de Card Games
 
 Este é um projeto de e-commerce focado na venda de Card Games, desenvolvido como atividade acadêmica. O sistema conta com áreas para clientes e funcionários, controle de sessões e persistência de dados.
